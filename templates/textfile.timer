@@ -1,0 +1,15 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description="Update node exporter {{ item.name }} metrics every {{ item.update_every | default("1m") }}"
+
+[Timer]
+Unit=node_exporter_{{ item.name }}.service
+{% if item.execute_on_boot | default(true) | bool %}
+OnBootSec=1m
+{% endif %}
+OnUnitInactiveSec={{ item.update_every | default("1m") }}
+AccuracySec=1m
+
+[Install]
+WantedBy=timers.target

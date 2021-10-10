@@ -1,0 +1,65 @@
+---
+- name: Install node_exporter script dependencies
+  ansible.builtin.apt:
+    name: "{{ item.dependencies | default([]) }}"
+    state: present
+
+- name: Add node_exporter script as symlink
+  ansible.builtin.file:
+    src: "{{ item.symlink }}"
+    path: "{{ node_exporter_scripts_dir }}/{{ item.symlink | basename }}"
+    owner: root
+    group: root
+    state: link
+  when: item.symlink is defined
+
+- name: Add node_exporter script from file
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ node_exporter_scripts_dir }}/{{ item.src | basename }}"
+    owner: root
+    group: root
+    mode: u=rwx,g=rx,o=rx
+  when: not item.symlink is defined
+
+- block:
+    - name: Create node_exporter systemd scripts directory
+      ansible.builtin.file:
+        path: "{{ node_exporter_systemd_scripts_dir }}"
+        owner: root
+        group: root
+        mode: u=rwx,g=rx,o=rx
+        state: directory
+
+    - name: Add node_exporter textfile systemd script
+      ansible.builtin.template:
+        src: textfile.sh
+        dest: "{{ node_exporter_systemd_scripts_dir }}/{{ item.name }}.sh"
+        owner: root
+        group: root
+        mode: u=rwx,g=rx,o=rx
+
+    - name: Add node_exporter textfile systemd unit
+      ansible.builtin.template:
+        src: textfile.service
+        dest: /etc/systemd/system/node_exporter_{{ item.name }}.service
+        owner: root
+        group: root
+        mode: u=rw,g=r,o=r
+
+    - name: Add node_exporter textfile systemd timer
+      ansible.builtin.template:
+        src: textfile.timer
+        dest: /etc/systemd/system/node_exporter_{{ item.name }}.timer
+        owner: root
+        group: root
+        mode: u=rw,g=r,o=r
+
+    - name: Enable node_exporter textfile systemd timer
+      ansible.builtin.systemd:
+        name: node_exporter_{{ item.name }}.timer
+        daemon_reload: yes
+        enabled: yes
+        masked: no
+        state: started
+  when: node_exporter_textfile_directory != ""

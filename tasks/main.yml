@@ -1,0 +1,43 @@
+---
+- name: Apply base prometheus exporter role
+  ansible.builtin.include_role:
+    name: prometheus_exporter
+    public: true
+  vars:
+    exporter_name: node_exporter
+
+- block:
+    - name: Create node_exporter textfile directory
+      ansible.builtin.file:
+        path: "{{ node_exporter_textfile_directory }}"
+        state: directory
+        owner: root
+        group: "{{ exporter_group }}"
+        mode: u=rwx,g=rwx,o=rx
+      when: node_exporter_textfile_directory != ""
+
+    - name: Create node_exporter scripts dir
+      ansible.builtin.file:
+        path: "{{ node_exporter_scripts_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: u=rwx,g=rx,o=rx
+      when: node_exporter_scripts != []
+
+    - name: Add git repos for node_exporter scripts
+      ansible.builtin.git:
+        repo: "{{ item.repo }}"
+        dest: /usr/local/src/{{ item.name }}
+        version: "{{ item.version | default('master') }}"
+      loop: "{{ node_exporter_scripts_repos }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Add node_exporter textfile scripts
+      ansible.builtin.include_tasks:
+        file: textfile-script.yml
+      loop: "{{ node_exporter_scripts }}"
+      loop_control:
+        label: "{{ item.name }}"
+  when: exporter_install | bool
