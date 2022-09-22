@@ -8,5 +8,5 @@ Wants=network-online.target node_exporter_{{ item.name }}.timer
 [Service]
 Type=oneshot
 User={{ item.user | default(exporter_user) }}
-Group={{ item.user | default(exporter_group) }}
+Group={{ item.group | default(exporter_group) }}
 ExecStart={{ node_exporter_systemd_scripts_dir }}/{{ item.name }}.sh
