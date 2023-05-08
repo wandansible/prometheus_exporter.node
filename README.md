@@ -138,10 +138,11 @@ OPTIONS (= is mandatory):
         default: null
         type: str
 
-- node_exporter_listen
-        Listen address and port
-        default: localhost:9100
-        type: str
+- node_exporter_listen_addresses
+        List of addresses and ports to listen on
+        default: ['localhost:9100']
+        elements: str
+        type: list
 
 - node_exporter_log_level
         Only log messages with the given severity or above

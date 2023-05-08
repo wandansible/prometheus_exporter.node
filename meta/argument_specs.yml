@@ -7,10 +7,11 @@ argument_specs:
         description: Extra flags to run exporter with
         type: dict
 
-      node_exporter_listen:
-        description: Listen address and port
-        type: str
-        default: localhost:9100
+      node_exporter_listen_addresses:
+        description: List of addresses and ports to listen on
+        type: list
+        elements: str
+        default: ['localhost:9100']
 
       node_exporter_log_level:
         description: Only log messages with the given severity or above
