@@ -58,8 +58,8 @@
     - name: Enable node_exporter textfile systemd timer
       ansible.builtin.systemd:
         name: node_exporter_{{ item.name }}.timer
-        daemon_reload: yes
-        enabled: yes
-        masked: no
+        daemon_reload: true
+        enabled: true
+        masked: false
         state: started
   when: node_exporter_textfile_directory != ""
