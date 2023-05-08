@@ -16,16 +16,16 @@ ENTRY POINT: main - Install and configure Node Exporter for Prometheus
 
 OPTIONS (= is mandatory):
 
-- node_exporter_add_extract_dir
-        If true, add an extraction directory for the exporter package
-        default: false
-        type: bool
-
 - node_exporter_arch_map
         Mapping of the possible values of ansible_architecture to the
         exporter package architectures
         default: null
         type: dict
+
+- node_exporter_archive_url
+        Override the URL for the exporter archive file
+        default: null
+        type: str
 
 - node_exporter_bin_dir
         Directory for the exporter executable
@@ -42,25 +42,31 @@ OPTIONS (= is mandatory):
         default: null
         type: str
 
+- node_exporter_checksum_file
+        Filename for the exporter package checksums
+        default: null
+        type: str
+
 - node_exporter_checksum_type
         The exporter package checksum type
         default: null
         type: str
 
-- node_exporter_checksums_file
-        Filename for the exporter package checksums
+- node_exporter_checksum_url
+        Override the URL for the exporter checksum file
         default: null
         type: str
 
-- node_exporter_checksums_url
-        URL for the exporter package checksums
-        default: null
-        type: str
+- node_exporter_clean_src_dir
+        Remove old downloaded archive files from exporter src
+        directory
+        default: true
+        type: bool
 
 - node_exporter_configure_caddy
         If true, configure caddy to add a TLS endpoint for the
         exporter
-        default: true
+        default: false
         type: bool
 
 - node_exporter_description
@@ -133,11 +139,6 @@ OPTIONS (= is mandatory):
         default: null
         type: dict
 
-- node_exporter_latest_url
-        URL for the latest version
-        default: null
-        type: str
-
 - node_exporter_listen_addresses
         List of addresses and ports to listen on
         default: ['localhost:9100']
@@ -155,26 +156,6 @@ OPTIONS (= is mandatory):
         default: true
         type: bool
 
-- node_exporter_package
-        Filename of the exporter package (without extension)
-        default: null
-        type: str
-
-- node_exporter_package_dir
-        Directory the exporter package is extracted to
-        default: null
-        type: str
-
-- node_exporter_package_name
-        Name of the exporter package
-        default: null
-        type: str
-
-- node_exporter_package_url
-        URL for the exporter package
-        default: null
-        type: str
-
 - node_exporter_port
         Listen port
         default: 9100
@@ -182,7 +163,7 @@ OPTIONS (= is mandatory):
 
 - node_exporter_register
         If true, register the exporter with the scrape servers
-        default: true
+        default: false
         type: bool
 
 - node_exporter_scrape_servers
@@ -256,7 +237,7 @@ OPTIONS (= is mandatory):
 
 - node_exporter_scripts_dir
         Directory for the custom exporter scripts
-        default: /opt/exporters/node_exporter/scripts
+        default: /opt/prometheus/exporters/node_exporter/scripts
         type: str
 
 - node_exporter_scripts_repos
@@ -286,18 +267,18 @@ OPTIONS (= is mandatory):
         type: str
 
 - node_exporter_src_dir
-        Directory for the exporter downloads
+        Directory for the downloaded exporter src archive
         default: null
         type: str
+
+- node_exporter_strip_components
+        Strip NUMBER leading components from file names on extraction
+        default: 1
+        type: int
 
 - node_exporter_systemd_scripts_dir
         Directory for the systemd unit scripts
-        default: /opt/exporters/node_exporter/scripts/systemd
-        type: str
-
-- node_exporter_tag
-        Version git tag
-        default: null
+        default: /opt/prometheus/exporters/node_exporter/scripts/systemd
         type: str
 
 - node_exporter_target
@@ -318,12 +299,6 @@ OPTIONS (= is mandatory):
 - node_exporter_version
         Version to install (use "latest" for the latest version)
         default: latest
-        type: str
-
-- node_exporter_version_regex
-        Regular expression for capturing the version from the latest
-        tag
-        default: null
         type: str
 ```
 

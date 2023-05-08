@@ -8,7 +8,7 @@ node_exporter_textfile_directory: ""
 node_exporter_flags: "{{ lookup('template', 'flags') }}"
 node_exporter_extra_flags: {}
 node_exporter_log_level: warn
-node_exporter_scripts_dir: /opt/exporters/node_exporter/scripts
+node_exporter_scripts_dir: /opt/prometheus/exporters/node_exporter/scripts
 node_exporter_scripts: []
 node_exporter_scripts_repos:
   - name: node-exporter-textfile-collector-scripts
