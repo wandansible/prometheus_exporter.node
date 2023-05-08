@@ -24,4 +24,6 @@
   {% endif %}
 {% endfor %}
 --log.level="{{ node_exporter_log_level }}" \
---web.listen-address="{{ node_exporter_listen_address }}"
+{% for node_exporter_listen_address in node_exporter_listen_addresses %}
+--web.listen-address="{{ node_exporter_listen_address }}" {{ '\\\\' if not loop.last }}
+{% endfor %}

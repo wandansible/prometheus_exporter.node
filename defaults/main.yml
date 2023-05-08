@@ -1,13 +1,14 @@
 ---
 node_exporter_port: 9100
-node_exporter_listen_address: localhost:{{ node_exporter_port }}
+node_exporter_listen_addresses:
+  - "localhost:{{ node_exporter_port }}"
 node_exporter_enabled_collectors: []
 node_exporter_disabled_collectors: []
 node_exporter_textfile_directory: ""
 node_exporter_flags: "{{ lookup('template', 'flags') }}"
 node_exporter_extra_flags: {}
 node_exporter_log_level: warn
-node_exporter_scripts_dir: /opt/exporters/node_exporter/scripts
+node_exporter_scripts_dir: /opt/prometheus/exporters/node_exporter/scripts
 node_exporter_scripts: []
 node_exporter_scripts_repos:
   - name: node-exporter-textfile-collector-scripts
