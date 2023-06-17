@@ -22,10 +22,12 @@ OPTIONS (= is mandatory):
         default: null
         type: dict
 
-- node_exporter_archive_url
-        Override the URL for the exporter archive file
+- node_exporter_archive_urls
+        Override the list of exporter archive urls for different
+        platforms and architectures
         default: null
-        type: str
+        elements: str
+        type: list
 
 - node_exporter_bin_dir
         Directory for the exporter executable
@@ -37,16 +39,6 @@ OPTIONS (= is mandatory):
         default: null
         type: str
 
-- node_exporter_checksum
-        The exporter package checksum
-        default: null
-        type: str
-
-- node_exporter_checksum_file
-        Filename for the exporter package checksums
-        default: null
-        type: str
-
 - node_exporter_checksum_type
         The exporter package checksum type
         default: null
@@ -54,6 +46,11 @@ OPTIONS (= is mandatory):
 
 - node_exporter_checksum_url
         Override the URL for the exporter checksum file
+        default: null
+        type: str
+
+- node_exporter_checksums
+        Override exporter archive checksums file contents
         default: null
         type: str
 
@@ -108,13 +105,18 @@ OPTIONS (= is mandatory):
         default: null
         type: raw
 
-- node_exporter_git_org
-        Name of organisation for exporter git repository
+- node_exporter_github_checksum_filename
+        Filename for the exporter package checksums file on github
         default: null
         type: str
 
-- node_exporter_git_repo
-        Name of exporter git repository
+- node_exporter_github_org
+        Name of organisation for exporter github repository
+        default: prometheus
+        type: str
+
+- node_exporter_github_repo
+        Name of exporter github repository
         default: null
         type: str
 
@@ -128,6 +130,11 @@ OPTIONS (= is mandatory):
         default: null
         elements: str
         type: list
+
+- node_exporter_handler
+        Name of the exporter handler to notify
+        default: null
+        type: str
 
 - node_exporter_install
         If true, install exporter
