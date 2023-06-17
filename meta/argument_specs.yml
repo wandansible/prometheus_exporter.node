@@ -195,17 +195,24 @@ argument_specs:
         type: bool
         default: true
 
-      node_exporter_git_org:
-        description: Name of organisation for exporter git repository
+      node_exporter_github_org:
+        description: Name of organisation for exporter github repository
+        type: str
+        default: prometheus
+
+      node_exporter_github_repo:
+        description: Name of exporter github repository
         type: str
 
-      node_exporter_git_repo:
-        description: Name of exporter git repository
+      node_exporter_github_checksum_filename:
+        description: Filename for the exporter package checksums file on github
         type: str
 
-      node_exporter_archive_url:
-        description: Override the URL for the exporter archive file
-        type: str
+      node_exporter_archive_urls:
+        description: |
+          Override the list of exporter archive urls for different platforms and architectures
+        type: list
+        elements: str
 
       node_exporter_version:
         description: Version to install (use "latest" for the latest version)
@@ -226,20 +233,20 @@ argument_specs:
         description: Override the URL for the exporter checksum file
         type: str
 
-      node_exporter_checksum_file:
-        description: Filename for the exporter package checksums
-        type: str
-
       node_exporter_checksum_type:
         description: The exporter package checksum type
         type: str
 
-      node_exporter_checksum:
-        description: The exporter package checksum
+      node_exporter_checksums:
+        description: Override exporter archive checksums file contents
         type: str
 
       node_exporter_service:
         description: Name of the exporter systemd service
+        type: str
+
+      node_exporter_handler:
+        description: Name of the exporter handler to notify
         type: str
 
       node_exporter_description:

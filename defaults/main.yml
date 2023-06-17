@@ -1,4 +1,5 @@
 ---
+node_exporter_github_org: prometheus
 node_exporter_port: 9100
 node_exporter_listen_addresses:
   - "localhost:{{ node_exporter_port }}"
