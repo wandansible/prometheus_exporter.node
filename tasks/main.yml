@@ -20,7 +20,7 @@
         owner: root
         group: root
         mode: u=rwx,g=rx,o=rx
-      when: node_exporter_scripts != []
+      when: node_exporter_scripts | length >= 1
 
     - name: Add git repos for node_exporter scripts
       ansible.builtin.git:
