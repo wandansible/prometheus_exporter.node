@@ -3,7 +3,7 @@
   {% if not collector is mapping %}
 --collector.{{ collector }} \
   {% else %}
-    {% set name, options = (collector.items()|list)[0] %}
+    {% set name, options = collector.items() | list | first %}
 --collector.{{ name }} \
     {% for k,v in options|dictsort %}
 --collector.{{ name }}.{{ k }}={{ v | quote }} \
