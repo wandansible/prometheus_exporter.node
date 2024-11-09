@@ -1,29 +1,29 @@
 #jinja2: trim_blocks: "false", lstrip_blocks: "true"
 {% for collector in node_exporter_enabled_collectors %}
   {% if not collector is mapping %}
---collector.{{ collector }} \
+--collector.{{ collector }}
   {% else %}
     {% set name, options = collector.items() | list | first %}
---collector.{{ name }} \
-    {% for k,v in options|dictsort %}
---collector.{{ name }}.{{ k }}={{ v | quote }} \
+--collector.{{ name }}
+    {% for k, v in options | dictsort %}
+--collector.{{ name }}.{{ k }}="{{ v }}"
     {% endfor %}
   {% endif %}
 {% endfor %}
 {% for collector in node_exporter_disabled_collectors %}
---no-collector.{{ collector }} \
+--no-collector.{{ collector }}
 {% endfor %}
 {% if node_exporter_textfile_directory | length > 0 %}
---collector.textfile.directory="{{ node_exporter_textfile_directory }}" \
+--collector.textfile.directory="{{ node_exporter_textfile_directory }}"
 {% endif %}
-{% for k,v in node_exporter_extra_flags | dictsort %}
+{% for k, v in node_exporter_extra_flags | dictsort %}
   {% if v == "" %}
---{{ k }} \
+--{{ k }}
   {% else %}
---{{ k }}={{ v | quote }} \
+--{{ k }}="{{ v }}"
   {% endif %}
 {% endfor %}
---log.level="{{ node_exporter_log_level }}" \
+--log.level="{{ node_exporter_log_level }}"
 {% for node_exporter_listen_address in node_exporter_listen_addresses %}
---web.listen-address="{{ node_exporter_listen_address }}" {{ "\\" if not loop.last }}
+--web.listen-address="{{ node_exporter_listen_address }}"
 {% endfor %}
