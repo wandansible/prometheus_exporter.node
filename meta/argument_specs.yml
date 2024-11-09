@@ -11,7 +11,7 @@ argument_specs:
         description: List of addresses and ports to listen on
         type: list
         elements: str
-        default: ['localhost:9100']
+        default: ["localhost:9100"]
 
       node_exporter_log_level:
         description: Only log messages with the given severity or above
@@ -27,8 +27,8 @@ argument_specs:
         description:
           - List of collectors to enable
           - |
-            Each item may be given as a string for the name of the collector
-            or a dictonary with the following structure:
+              Each item may be given as a string for the name of the collector
+              or a dictonary with the following structure:
           - Key = Name of the collector
           - "Value = Dictionary with the following structure:"
           - "  Key = Name of the collector option"
@@ -245,6 +245,10 @@ argument_specs:
         description: Name of the exporter systemd service
         type: str
 
+      node_exporter_service_unit_file:
+        description: Contents of the systemd unit file for the exporter
+        type: str
+
       node_exporter_handler:
         description: Name of the exporter handler to notify
         type: str
@@ -254,7 +258,7 @@ argument_specs:
         type: str
 
       node_exporter_flags:
-        description: Contents or list of flags to run exporter with
+        description: List of flags to run exporter with, as string or list
         type: raw
 
       node_exporter_target:

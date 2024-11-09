@@ -6,6 +6,7 @@ node_exporter_listen_addresses:
 node_exporter_enabled_collectors: []
 node_exporter_disabled_collectors: []
 node_exporter_textfile_directory: ""
+node_exporter_service_unit_file: "{{ lookup('template', 'service') }}"
 node_exporter_flags: "{{ lookup('template', 'flags') }}"
 node_exporter_extra_flags: {}
 node_exporter_log_level: warn
