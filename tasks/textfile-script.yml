@@ -48,7 +48,7 @@
         owner: root
         group: root
         mode: u=rw,g=r,o=r
-        register: _unit_file
+      register: _unit_file
 
     - name: Add node_exporter textfile systemd timer
       ansible.builtin.template:
@@ -57,7 +57,7 @@
         owner: root
         group: root
         mode: u=rw,g=r,o=r
-        register: _timer_file
+      register: _timer_file
 
     - name: Enable node_exporter textfile systemd timer
       ansible.builtin.systemd:
