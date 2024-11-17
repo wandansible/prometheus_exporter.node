@@ -22,7 +22,9 @@
     mode: u=rwx,g=rx,o=rx
   when: not item.symlink is defined
 
-- block:
+- name: Add textfile collector script
+  when: node_exporter_textfile_directory != ""
+  block:
     - name: Create node_exporter systemd scripts directory
       ansible.builtin.file:
         path: "{{ node_exporter_systemd_scripts_dir }}"
@@ -46,6 +48,7 @@
         owner: root
         group: root
         mode: u=rw,g=r,o=r
+        register: _unit_file
 
     - name: Add node_exporter textfile systemd timer
       ansible.builtin.template:
@@ -54,12 +57,13 @@
         owner: root
         group: root
         mode: u=rw,g=r,o=r
+        register: _timer_file
 
     - name: Enable node_exporter textfile systemd timer
       ansible.builtin.systemd:
         name: node_exporter_{{ item.name }}.timer
-        daemon_reload: true
+        daemon_reload: >-
+          {{ true if _unit_file is changed or _timer_file is changed else false }}
         enabled: true
         masked: false
         state: started
-  when: node_exporter_textfile_directory != ""
