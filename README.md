@@ -116,6 +116,11 @@ Options (= indicates it is required):
           default: null
           type: str
 
+- node_exporter_github_token  Optional bearer token to use to
+                               authenticate with api.github.com
+          default: ''
+          type: str
+
 - node_exporter_group  Name of the exporter unix group
           default: null
           type: str
