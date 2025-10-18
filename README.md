@@ -16,13 +16,15 @@ ENTRY POINT: *main* - Install and configure Node Exporter for Prometheus
 
 Options (= indicates it is required):
 
-- node_exporter_arch_map  Mapping of the possible values of ansible_architecture to the
-                           exporter package architectures
+- node_exporter_arch_map  Mapping of the possible values of
+                           ansible_architecture to the exporter
+                           package architectures
           default: null
           type: dict
 
-- node_exporter_archive_urls  Override the list of exporter archive urls for different platforms
-                               and architectures
+- node_exporter_archive_urls  Override the list of exporter archive
+                               urls for different platforms and
+                               architectures
           default: null
           elements: str
           type: list
@@ -39,23 +41,28 @@ Options (= indicates it is required):
           default: null
           type: str
 
-- node_exporter_checksum_url  Override the URL for the exporter checksum file
+- node_exporter_checksum_url  Override the URL for the exporter
+                               checksum file
           default: null
           type: str
 
-- node_exporter_checksums  Override exporter archive checksums file contents
+- node_exporter_checksums  Override exporter archive checksums file
+                            contents
           default: null
           type: str
 
-- node_exporter_clean_src_dir  Remove old downloaded archive files from exporter src directory
+- node_exporter_clean_src_dir  Remove old downloaded archive files
+                                from exporter src directory
           default: true
           type: bool
 
-- node_exporter_configure_caddy  If true, configure caddy to add a TLS endpoint for the exporter
+- node_exporter_configure_caddy  If true, configure caddy to add a
+                                  TLS endpoint for the exporter
           default: false
           type: bool
 
-- node_exporter_description  Description for the exporter systemd service
+- node_exporter_description  Description for the exporter systemd
+                              service
           default: null
           type: str
 
@@ -84,19 +91,24 @@ Options (= indicates it is required):
           default: null
           type: dict
 
-- node_exporter_file_sd_dir  Directory, on scrape servers, for the file service discovery target
+- node_exporter_file_sd_dir  Directory, on scrape servers, for the
+                              file service discovery target
           default: /etc/prometheus/file_sd/node_exporter
           type: str
 
-- node_exporter_flags  List of flags to run exporter with, as string or list
+- node_exporter_flags  List of flags to run exporter with, as string
+                        or list
           default: null
           type: raw
 
-- node_exporter_github_checksum_filename  Filename for the exporter package checksums file on github
+- node_exporter_github_checksum_filename  Filename for the exporter
+                                           package checksums file on
+                                           github
           default: null
           type: str
 
-- node_exporter_github_org  Name of organisation for exporter github repository
+- node_exporter_github_org  Name of organisation for exporter github
+                             repository
           default: prometheus
           type: str
 
@@ -121,21 +133,25 @@ Options (= indicates it is required):
           default: true
           type: bool
 
-- node_exporter_labels  Labels added to exporter metrics, overrides prometheus_labels
+- node_exporter_labels  Labels added to exporter metrics, overrides
+                         prometheus_labels
           default: null
           type: dict
 
-- node_exporter_listen_addresses  List of addresses and ports to listen on
+- node_exporter_listen_addresses  List of addresses and ports to
+                                   listen on
           default: ['localhost:9100']
           elements: str
           type: list
 
-- node_exporter_log_level  Only log messages with the given severity or above
+- node_exporter_log_level  Only log messages with the given severity
+                            or above
           choices: [debug, info, warn, error]
           default: warn
           type: str
 
-- node_exporter_manage_user  If true, add exporter unix user and group
+- node_exporter_manage_user  If true, add exporter unix user and
+                              group
           default: true
           type: bool
 
@@ -143,83 +159,88 @@ Options (= indicates it is required):
           default: 9100
           type: int
 
-- node_exporter_register  If true, register the exporter with the scrape servers
+- node_exporter_register  If true, register the exporter with the
+                           scrape servers
           default: false
           type: bool
 
-- node_exporter_scrape_servers  List of servers that scrape exporter metrics from the host,
-                                 overrides prometheus_scrape_servers
+- node_exporter_scrape_servers  List of servers that scrape exporter
+                                 metrics from the host, overrides
+                                 prometheus_scrape_servers
           default: null
           elements: str
           type: list
 
-- node_exporter_scripts  List of custom scripts for generating metrics exported by the
-                          textfile collector
+- node_exporter_scripts  List of custom scripts for generating
+                          metrics exported by the textfile collector
           default: null
           elements: dict
           type: list
           options:
 
-          - args            Text for command arguments
+          - args  Text for command arguments
             default: null
             type: str
 
-          - dependencies            List of packages to install
+          - dependencies  List of packages to install
             default: null
             elements: str
             type: list
 
-          - env            Text for environment variables
+          - env  Text for environment variables
             default: null
             type: str
 
-          - execute_on_boot            If true, the script is run just after boot without waiting
-                              for the delay set by update_every
+          - execute_on_boot  If true, the script is run just after
+                              boot without waiting for the delay set
+                              by update_every
             default: true
             type: bool
 
-          - group            Group to run the script
+          - group  Group to run the script
             default: node-exporter
             type: str
 
-          = name            Name for the script
+          = name  Name for the script
             type: str
 
-          - src            Path to the script to copy over to the host
+          - src  Path to the script to copy over to the host
             default: null
             type: str
 
-          - symlink            Add the script as a symlink to the given path
+          - symlink  Add the script as a symlink to the given path
             default: null
             type: str
 
-          - update_every            How often to run the script given as a systemd timespan,
-                           see
+          - update_every  How often to run the script given as a
+                           systemd timespan, see
                            https://www.freedesktop.org/software/systemd/man/systemd.time.html#Parsing%20Time%20Spans
             default: 1m
             type: str
 
-          - user            User to run the script
+          - user  User to run the script
             default: node-exporter
             type: str
 
-- node_exporter_scripts_dir  Directory for the custom exporter scripts
+- node_exporter_scripts_dir  Directory for the custom exporter
+                              scripts
           default: /opt/prometheus/exporters/node_exporter/scripts
           type: str
 
-- node_exporter_scripts_repos  List of git repos with custom exporter scripts
+- node_exporter_scripts_repos  List of git repos with custom exporter
+                                scripts
           default: null
           elements: dict
           type: list
           options:
 
-          = name            Name of the repo
+          = name  Name of the repo
             type: str
 
-          = repo            URL to the repo
+          = repo  URL to the repo
             type: str
 
-          - version            Version of the repo to checkout
+          - version  Version of the repo to checkout
             default: master
             type: str
 
@@ -227,19 +248,23 @@ Options (= indicates it is required):
           default: null
           type: str
 
-- node_exporter_service_unit_file  Contents of the systemd unit file for the exporter
+- node_exporter_service_unit_file  Contents of the systemd unit file
+                                    for the exporter
           default: null
           type: str
 
-- node_exporter_src_dir  Directory for the downloaded exporter src archive
+- node_exporter_src_dir  Directory for the downloaded exporter src
+                          archive
           default: null
           type: str
 
-- node_exporter_strip_components  Strip NUMBER leading components from file names on extraction
+- node_exporter_strip_components  Strip NUMBER leading components
+                                   from file names on extraction
           default: 1
           type: int
 
-- node_exporter_systemd_scripts_dir  Directory for the systemd unit scripts
+- node_exporter_systemd_scripts_dir  Directory for the systemd unit
+                                      scripts
           default: /opt/prometheus/exporters/node_exporter/scripts/systemd
           type: str
 
@@ -247,7 +272,8 @@ Options (= indicates it is required):
           default: null
           type: str
 
-- node_exporter_textfile_directory  Directory for the textfile collector to read from
+- node_exporter_textfile_directory  Directory for the textfile
+                                     collector to read from
           default: null
           type: str
 
@@ -255,7 +281,8 @@ Options (= indicates it is required):
           default: null
           type: str
 
-- node_exporter_version  Version to install (use "latest" for the latest version)
+- node_exporter_version  Version to install (use "latest" for the
+                          latest version)
           default: latest
           type: str
 ```
